@@ -23,37 +23,55 @@ class Player {
         this.x += this.speedX; //might not even need this 
         this.y += this.speedY; 
     }
-    // gravity () {
-    //     this.x += this.speedX; //might not even need this
-    //     this.y += this.speedY; 
-    // }
+    gravity () {
+        this.x += this.speedX; //might not even need this
+        this.y += this.speedY;   
+        if (this.y + this.height > h) {
+            this.speedY = 0;
+            this.y = h - this.height
+        }
+    }
 }
 
+//creating the player and setting up to draw the player's image YOU MUST LOOK INTO ANIMATING THE GIF LATER
 let you = new Player();
 
+const playerBirdImg = new Image()
+playerBirdImg.src = 'projectPigeonImages/bluebird.gif';
+playerBirdImg.onload = function () {
+    context.drawImage(playerBirdImg, you.x, you.y, you.width, you.height)
+}
                    
 
 //the event listeners, the movements for the player
 
 
 document.addEventListener('keydown', function(ev){ //player flying up 
-    if (ev.code === "Space") {
-        you.speedY = -5; 
-    }
-}) 
+    if (ev.code === "Space") { 
+        if (you.y - 10 < 0) {
+            you.speedY = 0;
+        } else {
+            you.speedY = -5; 
+        }   
+    }     
+       
+})   
 
 document.addEventListener('keyup', function(ev){ //recreation of gravity
-    you.speedY = 7;
+        you.speedY = 10;  
 })
+
+//create the obstacle class  
+
 
 //animation
 
 function animate() {
     window.requestAnimationFrame(animate);
-    context.clearRect(0, 0, w, h); 
-    you.move(); 
-    // you.gravity(); 
-    context.fillRect(you.x, you.y, you.width, you.height);
+    context.clearRect(0, 0, w, h);   
+    // you.move(); 
+    you.gravity(); 
+    context.drawImage(playerBirdImg, you.x, you.y, you.width, you.height);
 }
 
 animate(); 
@@ -67,8 +85,10 @@ function detectCollision(player, obj) {
       player.y < obj.y + obj.h &&
       player.y + player.h > obj.y
     ) {
-      return true;
+      player.speedY = 0;
     } else {
       return false;
     }
   }
+
+  detectCollision(you, canvas)
