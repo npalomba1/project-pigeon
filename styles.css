@@ -1,0 +1,14 @@
+body {
+    background-color: coral;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+#canvas {
+    border: 1px solid black;
+    height: 500px; /*potentially delete this later*/
+    width: 1000px; /*potentially delete this later*/
+    margin: 5% 25%;
+}
