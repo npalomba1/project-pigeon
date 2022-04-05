@@ -62,7 +62,14 @@ document.addEventListener('keyup', function(ev){ //recreation of gravity
 })
 
 //create the obstacle class  
-
+class Obstacle {
+    constructor() {
+        this.x = Math.floor(Math.random() * 500);
+        this.y = h;
+        this.width = 100
+        this.height = Math.floor(Math.random() * 250)
+    }    
+}
 
 //animation
 
