@@ -64,21 +64,93 @@ document.addEventListener('keyup', function(ev){ //recreation of gravity
 //create the obstacle class  
 class Obstacle {
     constructor() {
-        this.x = Math.floor(Math.random() * 500);
-        this.y = h;
-        this.width = 100
-        this.height = Math.floor(Math.random() * 250)
+        this.x = 950;
+        this.y = 200 + Math.random() * 150;
+        this.width = 100;
+        this.height = 300 + Math.random() * 150;
+        this.speedX = 10; 
     }    
 }
+  
+let obstaclesArr = [];
+
+function buildingGenerator() {
+    obstaclesArr.push(new Obstacle())
+    console.log(obstaclesArr)
+}
+
+//building image onload function goes here ***
+
+setInterval(buildingGenerator, 2000)
+
+
+//create the enemy flyer class
+
+class Enemy {
+    constructor() {
+        // super(width, height, speedX, speedY)
+        this.x = 800;
+        this.y = 50;
+        this.width = 70;
+        this.height = 50;
+        this.speedX = 15;
+        this.speedY = 1; 
+    }
+
+    flyAttack() {
+        this.x -= this.speedX;
+        this.y += this.speedY;
+    }
+}
+
+ 
+// creating the enemy generator here
+let enemiesArr = [];
+
+function enemiesGenerator() {
+    enemiesArr.push(new Enemy())
+    console.log(enemiesArr)
+}
+
+setInterval(enemiesGenerator, 1000)
 
 //animation
+let game;
 
 function animate() {
-    window.requestAnimationFrame(animate);
+    game = window.requestAnimationFrame(animate);
     context.clearRect(0, 0, w, h);   
     // you.move(); 
     you.gravity(); 
     context.drawImage(playerBirdImg, you.x, you.y, you.width, you.height);
+    //obstacles generating 
+    for (let i = 0; i < obstaclesArr.length; i++) {
+        // const item = obstaclesArr[i]; 
+        context.fillStyle = 'black';
+        context.fillRect(obstaclesArr[i].x, obstaclesArr[i].y, obstaclesArr[i].width, obstaclesArr[i].height);
+        obstaclesArr[i].x -= 5;
+        console.log('im pushin p', obstaclesArr[i])
+
+        //collision detection for buildings
+        let didCollide = detectCollision(you, obstaclesArr[i])
+        if (didCollide) {
+            console.log("you lost")
+            window.cancelAnimationFrame(game);
+        }
+    }  
+    //enemies generating 
+    for (let i = 0; i < enemiesArr.length; i++) {
+        context.fillStyle = 'black';
+        context.fillRect(enemiesArr[i].x, enemiesArr[i].y, enemiesArr[i].width, enemiesArr[i].height);
+        enemiesArr[i].flyAttack(); 
+        
+        //collision detection for enemies
+        let didAbducted = detectCollision(you, enemiesArr[i])
+        if (didAbducted) {
+            console.log("you lost")
+            window.cancelAnimationFrame(game); 
+        }
+    }
 }
 
 animate(); 
@@ -87,15 +159,16 @@ animate();
 
 function detectCollision(player, obj) {
     if (
-      player.x < obj.x + obj.w &&
-      player.x + player.w > obj.x &&
-      player.y < obj.y + obj.h &&
-      player.y + player.h > obj.y
+      player.x < obj.x + obj.width &&
+      player.x + player.width > obj.x &&
+      player.y < obj.y + obj.height &&
+      player.y + player.height > obj.y
     ) {
-      player.speedY = 0;
+    //   player.speedY = 0;
+      return true;
     } else {
       return false;
     }
   }
 
-  detectCollision(you, canvas)
+//   detectCollision(you, obstaclesArr[i])
