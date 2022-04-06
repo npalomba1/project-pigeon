@@ -41,7 +41,14 @@ playerBirdImg.src = 'projectPigeonImages/bluebird.gif';
 playerBirdImg.onload = function () {
     context.drawImage(playerBirdImg, you.x, you.y, you.width, you.height)
 }
-                   
+        
+// creating score counting function 
+function scoreCounter () {
+    let point = document.getElementById('score');
+    point.innerHTML = Number(point.innerHTML) + 1; 
+    console.log(point)
+}
+// let point = document.getElementById('score');
 
 //the event listeners, the movements for the player
 
@@ -76,7 +83,7 @@ let obstaclesArr = [];
 
 function buildingGenerator() {
     obstaclesArr.push(new Obstacle())
-    console.log(obstaclesArr)
+    
 }
 
 //building image onload function goes here ***
@@ -94,7 +101,7 @@ class Enemy {
         this.width = 70;
         this.height = 50;
         this.speedX = 15;
-        this.speedY = 1; 
+        this.speedY = Math.random() * 3; 
     }
 
     flyAttack() {
@@ -109,10 +116,33 @@ let enemiesArr = [];
 
 function enemiesGenerator() {
     enemiesArr.push(new Enemy())
-    console.log(enemiesArr)
+    
 }
 
 setInterval(enemiesGenerator, 1000)
+
+// creating the bagel points class
+class Bagel extends Obstacle {
+    constructor(width, height) {
+        super()
+        // this.x = 950;
+        // this.y = 200 + Math.random() * 150;
+        this.width = width; 
+        this.height = height;
+
+    }
+}
+
+//creating the bagel generator here
+
+let bagelArr = []; 
+
+function bagelGenerator() {
+    bagelArr.push(new Bagel(20, 20))
+    
+}
+
+setInterval(bagelGenerator, 3000);
 
 //animation
 let game;
@@ -129,7 +159,7 @@ function animate() {
         context.fillStyle = 'black';
         context.fillRect(obstaclesArr[i].x, obstaclesArr[i].y, obstaclesArr[i].width, obstaclesArr[i].height);
         obstaclesArr[i].x -= 5;
-        console.log('im pushin p', obstaclesArr[i])
+        
 
         //collision detection for buildings
         let didCollide = detectCollision(you, obstaclesArr[i])
@@ -140,7 +170,7 @@ function animate() {
     }  
     //enemies generating 
     for (let i = 0; i < enemiesArr.length; i++) {
-        context.fillStyle = 'black';
+        context.fillStyle = '#93E9BE';
         context.fillRect(enemiesArr[i].x, enemiesArr[i].y, enemiesArr[i].width, enemiesArr[i].height);
         enemiesArr[i].flyAttack(); 
         
@@ -150,6 +180,22 @@ function animate() {
             console.log("you lost")
             window.cancelAnimationFrame(game); 
         }
+    }
+
+    //bagels generating
+    for (let i = 0; i < bagelArr.length; i++) {
+        context.fillStyle = 'white';
+        context.fillRect(bagelArr[i].x, bagelArr[i].y, bagelArr[i].width, bagelArr[i].height); 
+        bagelArr[i].x -= 5
+
+        //collision detection for bagels
+        let didEatBagel = detectCollision(you, bagelArr[i])
+        if (didEatBagel) {
+            console.log("yum!")
+            scoreCounter();
+            bagelArr.splice(i, 1);
+        }
+        
     }
 }
 
