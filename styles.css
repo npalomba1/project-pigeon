@@ -16,12 +16,18 @@ body {
 }
 
 #start-button {
-    background-image: url('projectPigeonImages/pink-start.png');
+    /* background-image: url('projectPigeonImages/pink-start.png'); */
+    background-color: purple;
+    color: white;
+    font-family: 'Press Start 2P';
+    font-size: 14px;
 }
 
 p {
     line-height: 140%;
 }
+
+
 /* h2 {
     text-align: left;
 } */
