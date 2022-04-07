@@ -82,7 +82,7 @@ function startGame() {
     document.addEventListener('keydown', function (ev) { //player flying up 
         if (ev.code === "Space") {
             if (you.y - 10 < 0) {
-                you.speedY = 0;
+                you.speedY = 5;
             } else {
                 you.speedY = -5;
             }
