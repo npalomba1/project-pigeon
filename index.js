@@ -256,10 +256,10 @@ function startGame() {
 
     function detectCollision(player, obj) {
         if (
-            player.x < obj.x + obj.width &&
-            player.x + player.width > obj.x &&
-            player.y < obj.y + obj.height &&
-            player.y + player.height > obj.y
+            player.x < obj.x + obj.width - 10 &&
+            player.x + player.width + 10 > obj.x &&
+            player.y < obj.y + obj.height - 10 &&
+            player.y + player.height - 10 > obj.y
         ) {
             //   player.speedY = 0;
             return true;

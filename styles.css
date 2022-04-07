@@ -11,7 +11,7 @@ body {
     border: 1px solid black;
     height: 500px; /*potentially delete this later*/
     width: 1000px; /*potentially delete this later*/
-    margin: 2% 25%;
+    margin: 0% 25%;
     background-image: url('projectPigeonImages/city-scape.jpg');
 }
 
@@ -21,6 +21,7 @@ body {
     color: white;
     font-family: 'Press Start 2P';
     font-size: 14px;
+    padding: 5px;
 }
 
 p {
