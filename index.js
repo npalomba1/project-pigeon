@@ -86,9 +86,13 @@ function buildingGenerator() {
 
 }
 
-//building image onload function goes here ***
-
 setInterval(buildingGenerator, 2000)
+
+let greenBuilding = new Image();
+        greenBuilding.src = 'projectPigeonImages/green-building.png';
+        greenBuilding.onload = function() {
+            context.drawImage(greenBuilding, obstaclesArr[i].x, obstaclesArr[i].y, obstaclesArr[i].width, obstaclesArr[i].height)
+        }
 
 
 //create the enemy flyer class
@@ -171,7 +175,7 @@ function animate() {
     for (let i = 0; i < obstaclesArr.length; i++) {
         // const item = obstaclesArr[i]; 
         context.fillStyle = 'black';
-        context.fillRect(obstaclesArr[i].x, obstaclesArr[i].y, obstaclesArr[i].width, obstaclesArr[i].height);
+        context.drawImage(greenBuilding, obstaclesArr[i].x, obstaclesArr[i].y, obstaclesArr[i].width, obstaclesArr[i].height);
         obstaclesArr[i].x -= 5;
 
 
