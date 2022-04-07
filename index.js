@@ -2,18 +2,29 @@ document.getElementById('start-button').onclick = function() {
         startGame();
     }
 
+
+
+let point = document.getElementById('score');
+    function scoreCounter() {
+        point.innerHTML = Number(point.innerHTML) + 1;
+        console.log(point)
+    }
+
 let gameOn = false
+
+let int1
+let int2
+let int3
 
 function startGame() {
     if (gameOn === false) {
         gameOn = true;
-        setInterval(buildingGenerator, 2000);
-        setInterval(enemiesGenerator, 1000);
-        setInterval(bagelGenerator, 3000);
-    
+        int1 = setInterval(buildingGenerator, 2000);
+        int2 = setInterval(enemiesGenerator, 1000);
+        int3 = setInterval(bagelGenerator, 3000);
+        point.innerHTML = 0;
         animate()
     }
-    
 }
 
 
@@ -62,11 +73,7 @@ function startGame() {
     }
 
     // creating score counting function 
-    function scoreCounter() {
-        let point = document.getElementById('score');
-        point.innerHTML = Number(point.innerHTML) + 1;
-        console.log(point)
-    }
+    
     // let point = document.getElementById('score');
 
     //the event listeners, the movements for the player
@@ -110,7 +117,7 @@ function startGame() {
     let greenBuilding = new Image();
     greenBuilding.src = 'projectPigeonImages/green-building.png';
     greenBuilding.onload = function () {
-        context.drawImage(greenBuilding, obstaclesArr[i].x, obstaclesArr[i].y, obstaclesArr[i].width, obstaclesArr[i].height)
+        // context.drawImage(greenBuilding, obstaclesArr[i].x, obstaclesArr[i].y, obstaclesArr[i].width, obstaclesArr[i].height)
     }
 
 
@@ -202,6 +209,7 @@ function startGame() {
             let didCollide = detectCollision(you, obstaclesArr[i])
             if (didCollide) {
                 console.log("you lost")
+                gameOver(); 
                 window.cancelAnimationFrame(game);
             }
         }
@@ -220,6 +228,7 @@ function startGame() {
             let didAbducted = detectCollision(you, enemiesArr[i])
             if (didAbducted) {
                 console.log("you lost")
+                gameOver(); 
                 window.cancelAnimationFrame(game);
             }
         }
@@ -250,13 +259,28 @@ function startGame() {
             player.x < obj.x + obj.width &&
             player.x + player.width > obj.x &&
             player.y < obj.y + obj.height &&
-            player.y + player.height - 10 > obj.y
+            player.y + player.height > obj.y
         ) {
             //   player.speedY = 0;
             return true;
         } else {
             return false;
         }
+    }
+
+    function gameOver() {
+        clearInterval(int1)
+        clearInterval(int2)
+        clearInterval(int3)
+        context.clearRect(0, 0, w, h);
+        context.fillStyle = 'white';
+        context.font = "18px  'Press Start 2P'";
+        context.fillText('Game Over: Press Start to Try Again', 200, 375);
+        gameOn = false;
+        obstaclesArr = [];
+        bagelArr = [];
+        enemiesArr = [];
+
     }
 
     //   detectCollision(you, obstaclesArr[i])

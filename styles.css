@@ -4,7 +4,7 @@ body {
     display: flex;
     flex-direction: column;
     color: white;
-    
+    font-family: 'Press Start 2P', cursive;
 }
 
 #canvas {
@@ -17,6 +17,10 @@ body {
 
 #start-button {
     background-image: url('projectPigeonImages/pink-start.png');
+}
+
+p {
+    line-height: 140%;
 }
 /* h2 {
     text-align: left;
