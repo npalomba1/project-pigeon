@@ -21,7 +21,7 @@ function startGame() {
         gameOn = true;
         int1 = setInterval(buildingGenerator, 2000);
         int2 = setInterval(enemiesGenerator, 1000);
-        int3 = setInterval(bagelGenerator, 3000);
+        int3 = setInterval(bagelGenerator, 4500);
         point.innerHTML = 0;
         animate()
     }
@@ -68,9 +68,16 @@ function startGame() {
 
     const playerBirdImg = new Image()
     playerBirdImg.src = 'projectPigeonImages/bluebird.gif';
+    const playerBirdImg2 = new Image()
+    playerBirdImg2.src = 'projectPigeonImages/bluebird-midflap.gif';
+    const playerBirdImg3 = new Image()
+    playerBirdImg3.src = 'projectPigeonImages/bluebird-flap-up.gif';
+
     playerBirdImg.onload = function () {
         context.drawImage(playerBirdImg, you.x, you.y, you.width, you.height)
     }
+const birdImgArr = [playerBirdImg, playerBirdImg2, playerBirdImg3]
+
 
     // creating score counting function 
     
@@ -190,13 +197,20 @@ function startGame() {
 
     //animation
     let game;
+    let currentBirdFrame = 0;
+    setInterval(function(){
+        currentBirdFrame++
+        if (currentBirdFrame >= 3) {
+            currentBirdFrame = 0
+        }
 
+    }, 200)
     function animate() {
         game = window.requestAnimationFrame(animate);
         context.clearRect(0, 0, w, h);
         // you.move(); 
         you.gravity();
-        context.drawImage(playerBirdImg, you.x, you.y, you.width, you.height);
+        context.drawImage(birdImgArr[currentBirdFrame], you.x, you.y, you.width, you.height);
         //obstacles generating 
         for (let i = 0; i < obstaclesArr.length; i++) {
             // const item = obstaclesArr[i]; 
