@@ -101,6 +101,21 @@ const birdImgArr = [playerBirdImg, playerBirdImg2, playerBirdImg3]
         you.speedY = 10;
     })
 
+    document.addEventListener("touchstart", function (ev){ //player flying up with touch event
+        if (you.y - 10 < 0) {
+            you.speedY = 5;
+        } else {
+            you.speedY = -5;
+        }
+    }) 
+
+    document.addEventListener("touchend", function(ev){ //player falling down if touch ends
+        you.speedY = 10;
+    })
+
+
+
+
     //create the obstacle class  
     class Obstacle {
         constructor() {
@@ -203,7 +218,6 @@ const birdImgArr = [playerBirdImg, playerBirdImg2, playerBirdImg3]
         if (currentBirdFrame >= 3) {
             currentBirdFrame = 0
         }
-
     }, 200)
     function animate() {
         game = window.requestAnimationFrame(animate);
