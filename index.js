@@ -59,6 +59,9 @@ function startGame() {
             if (this.y + this.height > h) {
                 this.speedY = 0;
                 this.y = h - this.height
+            } else if (this.y <= 0) {
+                // this.speedY = 5;
+                this.y = 0;
             }
         }
     }
@@ -87,12 +90,16 @@ const birdImgArr = [playerBirdImg, playerBirdImg2, playerBirdImg3]
 
 
     document.addEventListener('keydown', function (ev) { //player flying up 
+        // if (ev.code === "Space") {
+        //     if (you.y - 10 < 0) {
+        //         you.speedY = 5;
+        //     } else {
+        //         you.speedY = -5;
+        //     }
+        // }
         if (ev.code === "Space") {
-            if (you.y - 10 < 0) {
-                you.speedY = 5;
-            } else {
                 you.speedY = -5;
-            }
+            
         }
 
     })
@@ -102,20 +109,28 @@ const birdImgArr = [playerBirdImg, playerBirdImg2, playerBirdImg3]
     })
 
     document.addEventListener("touchstart", function (ev){ //player flying up with touch event   
+        // if (ev.target == canvas){ 
 
+        //     if (you.y - 10 < 0) {
+        //         console.log("pressing", you)
+        //         you.speedY = 5;
+                
+        //     } else {
+        //         you.speedY = -5;
+        //     }
+        //     ev.preventDefault();
+        // } 
         if (ev.target == canvas){ 
 
-            if (you.y - 10 < 0) {
-                you.speedY = 5;
-            } else {
-                you.speedY = -5;
-            }
+            you.speedY = -5;
+
             ev.preventDefault();
-        }
+        } 
 
     }, false) 
 
     document.addEventListener("touchend", function(ev){ //player falling down if touch ends
+     
         
        
 
