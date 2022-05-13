@@ -101,17 +101,29 @@ const birdImgArr = [playerBirdImg, playerBirdImg2, playerBirdImg3]
         you.speedY = 10;
     })
 
-    document.addEventListener("touchstart", function (ev){ //player flying up with touch event
-        if (you.y - 10 < 0) {
-            you.speedY = 5;
-        } else {
-            you.speedY = -5;
+    document.addEventListener("touchstart", function (ev){ //player flying up with touch event   
+
+        if (ev.target == canvas){ 
+
+            if (you.y - 10 < 0) {
+                you.speedY = 5;
+            } else {
+                you.speedY = -5;
+            }
+            ev.preventDefault();
         }
-    }) 
+
+    }, false) 
 
     document.addEventListener("touchend", function(ev){ //player falling down if touch ends
-        you.speedY = 10;
-    })
+        
+       
+
+        if (ev.target == canvas){
+            you.speedY = 10;
+            ev.preventDefault();
+        }
+    }, false)
 
 
 
